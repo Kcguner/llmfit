@@ -62,26 +62,35 @@ jobs:
       - name: Package artifacts
         shell: bash
         run: |
+          set +e
           DEST_DIR="${GITHUB_WORKSPACE}/release-assets"
           mkdir -p "$DEST_DIR"
           
-          BASE="${GITHUB_WORKSPACE}/llmfit-desktop/target/${{ matrix.target }}/release/bundle"
+          # Search broadly under the target directory for bundle outputs
+          SEARCH_ROOT="${GITHUB_WORKSPACE}/llmfit-desktop/target/${{ matrix.target }}/release"
+          
+          echo "=== Searching for artifacts under: $SEARCH_ROOT ==="
+          find "$SEARCH_ROOT" -type f \( -name "*.dmg" -o -name "*.app" -o -name "*.msi" -o -name "*.exe" -o -name "*.deb" -o -name "*.AppImage" \) 2>/dev/null || echo "No artifacts found"
           
           if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            APP=$(find "$BASE" -name '*.app' -maxdepth 3 2>/dev/null | head -1)
+            # Package .app as tarball
+            APP=$(find "$SEARCH_ROOT" -name '*.app' -type d 2>/dev/null | head -1)
             if [ -n "$APP" ]; then
               cd "$(dirname "$APP")"
               tar czf "${DEST_DIR}/llmfit-desktop-${GITHUB_REF_NAME}-${{ matrix.target }}.app.tar.gz" "$(basename "$APP")"
               cd "${GITHUB_WORKSPACE}"
             fi
-            find "$BASE" -type f -name "*.dmg" -exec cp {} "$DEST_DIR/" \; || true
+            find "$SEARCH_ROOT" -type f -name "*.dmg" -exec cp {} "$DEST_DIR/" \; 2>/dev/null || true
           elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            find "$BASE" -type f -name "*.msi" -exec cp {} "$DEST_DIR/" \; || true
-            find "$BASE" -type f -name "*.exe" -exec cp {} "$DEST_DIR/" \; || true
+            find "$SEARCH_ROOT" -type f -name "*.msi" -exec cp {} "$DEST_DIR/" \; 2>/dev/null || true
+            find "$SEARCH_ROOT" -type f -name "*.exe" -not -name "llmfit-desktop.exe" -exec cp {} "$DEST_DIR/" \; 2>/dev/null || true
           else
-            find "$BASE" -type f -name "*.deb" -exec cp {} "$DEST_DIR/" \; || true
-            find "$BASE" -type f -name "*.AppImage" -exec cp {} "$DEST_DIR/" \; || true
+            find "$SEARCH_ROOT" -type f -name "*.deb" -exec cp {} "$DEST_DIR/" \; 2>/dev/null || true
+            find "$SEARCH_ROOT" -type f -name "*.AppImage" -exec cp {} "$DEST_DIR/" \; 2>/dev/null || true
           fi
+          
+          echo "=== Packaged artifacts ==="
+          ls -la "$DEST_DIR/" 2>/dev/null || echo "No artifacts packaged"
 
       - name: Upload artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
