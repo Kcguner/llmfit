@@ -27,6 +27,12 @@ This fork introduces a **fully native, standalone Desktop GUI** built with Tauri
 - **Cross-Platform OS Installers:** Automated CI/CD pipelines generate `.exe`, `.msi`, `.dmg`, `.deb` installers dynamically via GitHub Actions on every release.
 - **High-Performance React Engine:** Fully decoupled data streams with fast debounced searching, sticky floating headers, and dynamic MoE offload metrics visualization without frame drops.
 
+### 📸 Interface Previews
+
+| Dark Mode (Industrial) | Light Mode (Clean & Precise) |
+|:---:|:---:|
+| <a href="assets/desktop-dark.png"><img src="assets/desktop-dark.png" alt="Dark Mode" width="400"/></a> | <a href="assets/desktop-light.png"><img src="assets/desktop-light.png" alt="Light Mode" width="400"/></a> |
+
 ---
 
 ## 🖥️ Install Desktop App (GUI)
