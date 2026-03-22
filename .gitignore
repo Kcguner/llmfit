@@ -8,4 +8,10 @@ data/gguf_sources_cache.json
 **/.svelte-kit/
 .worktrees/
 nul
+.agents/
+AGENTS.md
+IMPLEMENTATION_PLAN.md
+skills/
+skills-lock.json
+tmp.gif
 dev_out.txt
