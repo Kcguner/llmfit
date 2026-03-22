@@ -9,7 +9,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/v/release/Kcguner/llmfit?label=Desktop%20Release&color=amber&style=for-the-badge" alt="Release">
+  <a href="https://github.com/Kcguner/llmfit/releases">
+    <img src="https://img.shields.io/github/v/release/Kcguner/llmfit?label=Desktop%20Release&color=amber&style=for-the-badge" alt="Release">
+  </a>
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-zinc?style=for-the-badge" alt="Platforms">
 </p>
 
