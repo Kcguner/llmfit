@@ -29,9 +29,11 @@ This fork introduces a **fully native, standalone Desktop GUI** built with Tauri
 
 ### 📸 Interface Previews
 
-| Dark Mode (Industrial) | Light Mode (Clean & Precise) |
-|:---:|:---:|
-| <a href="assets/desktop-dark.png"><img src="assets/desktop-dark.png" alt="Dark Mode" width="400"/></a> | <a href="assets/desktop-light.png"><img src="assets/desktop-light.png" alt="Light Mode" width="400"/></a> |
+**Dark Mode (Industrial Engine)**  
+<img src="assets/desktop-dark.png" alt="Dark Mode" width="100%"/>
+
+**Light Mode (Clean & Precise)**  
+<img src="assets/desktop-light.png" alt="Light Mode" width="100%"/>
 
 ---
 
