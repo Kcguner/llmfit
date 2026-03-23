@@ -67,8 +67,13 @@ jobs:
           DEST_DIR="${GITHUB_WORKSPACE}/release-assets"
           mkdir -p "$DEST_DIR"
           
-          # Search broadly under the target directory for bundle outputs
-          SEARCH_ROOT="${GITHUB_WORKSPACE}/llmfit-desktop/target/${{ matrix.target }}/release"
+          # Cargo workspace puts target at workspace root, not under llmfit-desktop/
+          SEARCH_ROOT="${GITHUB_WORKSPACE}/target/${{ matrix.target }}/release"
+          
+          # Fallback: also check under llmfit-desktop if workspace layout differs
+          if [ ! -d "$SEARCH_ROOT" ]; then
+            SEARCH_ROOT="${GITHUB_WORKSPACE}/llmfit-desktop/target/${{ matrix.target }}/release"
+          fi
           
           echo "=== Searching for artifacts under: $SEARCH_ROOT ==="
           find "$SEARCH_ROOT" -type f \( -name "*.dmg" -o -name "*.app" -o -name "*.msi" -o -name "*.exe" -o -name "*.deb" -o -name "*.AppImage" \) 2>/dev/null || echo "No artifacts found"
